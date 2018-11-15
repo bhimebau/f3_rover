@@ -187,6 +187,8 @@ $(BUILD_DIR):
 #######################################
 clean:
 	-rm -fR $(BUILD_DIR)
+	-rm -f TAGS
+	-rm -f st-flash.log
   
 #######################################
 # dependencies
