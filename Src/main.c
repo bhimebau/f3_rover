@@ -41,7 +41,6 @@
 #include "stm32f3xx_hal.h"
 
 /* USER CODE BEGIN Includes */
-
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -77,6 +76,9 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
+
+int __io_putchar(int);
+int __io_getchar(void);
 
 /* USER CODE END PFP */
 
@@ -125,15 +127,20 @@ int main(void)
   HAL_GPIO_WritePin(nsleep_GPIO_Port, nsleep_Pin, GPIO_PIN_SET); // Unsleep the motor driver.
   TIM3->CCR2 = 8000;
   TIM3->CCR3 = 1500;
-  printf("\n\rUp and Running\n\r");
+  printf("\n\rBryce Up and Running\n\r");
   printf("%04x %d\n\r",(unsigned int) TIM3->CCR3, (unsigned int) TIM3->CCR3);
+  setvbuf(stdin, NULL, _IONBF, 0);
+  setvbuf(stdout, NULL, _IONBF, 0);
+  setvbuf(stderr, NULL, _IONBF, 0);
   
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1) {
-    //    printf("cd");
+    if (getchar()) {
+      printf("Received\n\r");
+    }
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
@@ -493,9 +500,12 @@ int __io_putchar(int ch) {
 }
 
 int __io_getchar(void) {
-  int ch = 'a';
-  //  HAL_UART_Transmit(&huart1, (uint8_t *) &ch, 1, 0xFFFF);
-  return ch;
+  uint8_t ch;
+  HAL_StatusTypeDef Status = HAL_BUSY; 
+  while(Status != HAL_OK) {
+    Status = HAL_UART_Receive(&huart1, &ch, 1, 0xFFFF);
+  }
+  return (ch);
 }
 
 /* USER CODE END 4 */
