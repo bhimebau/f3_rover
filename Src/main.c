@@ -94,7 +94,8 @@ int __io_getchar(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
+  float fnum = 1.2345;
+  
   /* USER CODE END 1 */
 
   /* MCU Configuration----------------------------------------------------------*/
@@ -129,6 +130,7 @@ int main(void)
   TIM3->CCR3 = 1500;
   printf("\n\rBryce Up and Running\n\r");
   printf("%04x %d\n\r",(unsigned int) TIM3->CCR3, (unsigned int) TIM3->CCR3);
+  printf("Here is the float: %f\n\r",fnum);
   setvbuf(stdin, NULL, _IONBF, 0);
   setvbuf(stdout, NULL, _IONBF, 0);
   setvbuf(stderr, NULL, _IONBF, 0);
