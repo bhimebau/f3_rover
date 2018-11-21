@@ -324,7 +324,26 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef* htim)
     HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /* USER CODE BEGIN TIM3_MspPostInit 1 */
-
+    if (HAL_TIM_PWM_Start(htim, TIM_CHANNEL_1) != HAL_OK)
+      {
+        /* PWM Generation Error */
+        Error_Handler();
+      }
+    if (HAL_TIM_PWM_Start(htim, TIM_CHANNEL_2) != HAL_OK)
+      {
+        /* PWM Generation Error */
+        Error_Handler();
+      }
+    if (HAL_TIM_PWM_Start(htim, TIM_CHANNEL_3) != HAL_OK)
+      {
+        /* PWM Generation Error */
+        Error_Handler();
+      }
+    if (HAL_TIM_PWM_Start(htim, TIM_CHANNEL_4) != HAL_OK)
+      {
+        /* PWM Generation Error */
+        Error_Handler();
+      }
   /* USER CODE END TIM3_MspPostInit 1 */
   }
 
