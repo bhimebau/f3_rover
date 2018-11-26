@@ -95,6 +95,7 @@ int main(void)
 {
   /* USER CODE BEGIN 1 */
   float fnum = 1.2345;
+  int count_last = 0;
   
   /* USER CODE END 1 */
 
@@ -134,15 +135,24 @@ int main(void)
   setvbuf(stdin, NULL, _IONBF, 0);
   setvbuf(stdout, NULL, _IONBF, 0);
   setvbuf(stderr, NULL, _IONBF, 0);
-  
+  printf("TIM4->CR1 = %04x\n\r",(unsigned int) TIM4->CR1);
+  TIM4->CR1 |= TIM_CR1_CEN;
+  printf("TIM4->CR1 = %04x\n\r",(unsigned int) TIM4->CR1);
+  printf("TIM4->ARR = %04x\n\r",(unsigned int) TIM4->ARR);
+  TIM4->ARR = 0xFFFF;
+  printf("TIM4->ARR = %04x\n\r",(unsigned int) TIM4->ARR);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1) {
-    if (getchar()) {
-      printf("Received\n\r");
+    if (count_last != TIM4->CNT) {
+      count_last = TIM4->CNT;
+      printf("TIM4->CNT=0x%04x, TIM4->DIR = 0x%04x\n\r",(unsigned int) TIM4->CNT, (unsigned int) (TIM4->CR1&TIM_CR1_DIR));
     }
+    /* if (getchar()) { */
+    /*   printf("TIM4->CNT=0x%04x\n\r",(unsigned int) TIM4->CNT); */
+    /* } */
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
